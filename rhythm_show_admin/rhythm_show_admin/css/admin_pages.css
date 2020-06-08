@@ -146,7 +146,7 @@ section .adduser-button {
     background-image: linear-gradient(to bottom, #fff3cf, #fff3ef);
 }
 
-section .users-gridview {
+section .gridview {
     position: absolute;
     left: 60px;
     right: 60px;
@@ -157,8 +157,10 @@ section .users-gridview {
     background-color: #ffffff;
 }
 
-section .users-gridview td {
-    padding: 2px;
+section .gridview td {
+    padding: 4px;
+    min-width: 80px;
+    max-width: 300px;
 
     border-style: solid;
     border-width: 1px;
@@ -171,8 +173,8 @@ section .users-gridview td {
     overflow: hidden;
 }
 
-section .users-gridview th {
-    padding: 4px 2px;
+section .gridview th {
+    padding: 4px;
 
     border-style: solid;
     border-width: 1px;
@@ -183,7 +185,7 @@ section .users-gridview th {
     background-color: #fff3cf;
 }
 
-section .users-gridview tr:nth-child(odd) {
+section .gridview tr:nth-child(odd) {
     background-color: #d0f5ea;
 }
 
@@ -249,5 +251,20 @@ section .users-gridview tr:nth-child(odd) {
     font-size: 20px;
 
     background-image: linear-gradient(to bottom, #fff3cf, #fff3ef);
+    cursor: pointer;
+}
+
+.choose-area {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    position: fixed;
+    width: 67%;
+
+    font-size: 20px;
+}
+
+.play-icon {
     cursor: pointer;
 }

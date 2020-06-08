@@ -10,11 +10,14 @@ using System.Web.UI.HtmlControls;
 using System.Data.SqlClient;
 using System.ComponentModel.Design;
 
+/// <summary>
+/// 提供Users数据表的操作方法
+/// </summary>
 public class Users
 {
 
 	// 获取所有普通用户
-	public static DataSet GetAllNormalUser()
+	public static DataSet GetAllNormalUsers()
     {
 		string connectionString = ConfigurationManager.ConnectionStrings["adonetConnectionString"].ToString();
 		SqlConnection connection = new SqlConnection(connectionString);

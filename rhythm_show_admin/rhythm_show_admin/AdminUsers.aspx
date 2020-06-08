@@ -25,7 +25,7 @@
         </nav>
         <section>
             <button class="adduser-button" onclick="window.location.href='./AddUser.aspx';window.event.returnValue=false;">新增用户</button>
-            <asp:GridView CssClass="users-gridview" ID="UsersGridView" runat="server"
+            <asp:GridView CssClass="gridview" ID="UsersGridView" runat="server"
                 AutoGenerateColumns="False"
                 AllowPaging="True"
                 GridLines="None"
@@ -34,8 +34,6 @@
                 OnRowUpdating="UsersGridView_RowUpdating"
                 OnRowCancelingEdit="UsersGridView_RowCancelingEdit"
                 OnRowCommand="UsersGridView_RowCommand"
-                PagerStyle-CssClass="pager"
-                AlternatingRowStyle-CssClass="alternating-row"
             >
                 <PagerSettings Visible="False" />
                 <Columns>

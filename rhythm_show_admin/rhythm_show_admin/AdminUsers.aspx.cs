@@ -25,7 +25,7 @@ public partial class AdminUsers : System.Web.UI.Page
 
     private void FillGridView()
     {
-        DataSet ds = Users.GetAllNormalUser();
+        DataSet ds = Users.GetAllNormalUsers();
         UsersGridView.DataSource = ds;
         UsersGridView.DataBind();
     }
