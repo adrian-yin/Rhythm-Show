@@ -26,7 +26,7 @@ public partial class AdminLogin : System.Web.UI.Page
         {
             // Session记录当前用户
             Session["UserId"] = Users.GetUserId(email).ToString();
-            Session["UserRole"] = "0";
+            Session["UserRole"] = "1";
 
             Response.Redirect("./AdminUsers.aspx");
         } else

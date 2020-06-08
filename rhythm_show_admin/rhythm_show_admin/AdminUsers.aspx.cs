@@ -13,6 +13,10 @@ public partial class AdminUsers : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["UserId"] == null || Session["UserRole"].ToString() != "1")
+        {
+            Response.Redirect("./AdminLogin.aspx");
+        }
         if (!IsPostBack)
         {
             FillGridView();
@@ -46,7 +50,7 @@ public partial class AdminUsers : System.Web.UI.Page
         int userId = Convert.ToInt32(UsersGridView.Rows[e.RowIndex].Cells[0].Text);
         string email = ((TextBox)UsersGridView.Rows[e.RowIndex].Cells[1].Controls[0]).Text;
         string nickname = ((TextBox)UsersGridView.Rows[e.RowIndex].Cells[3].Controls[0]).Text;
-        int gender = Convert.ToInt32(((TextBox)UsersGridView.Rows[e.RowIndex].Cells[4].Controls[0]).Text);
+        int gender = Convert.ToInt32(((DropDownList)UsersGridView.Rows[e.RowIndex].Cells[4].FindControl("GenderDropDownList")).SelectedValue);
         string birthday = ((TextBox)UsersGridView.Rows[e.RowIndex].Cells[5].Controls[0]).Text;
         string note = ((TextBox)UsersGridView.Rows[e.RowIndex].Cells[6].Controls[0]).Text;
         Users.UpdateUser(userId, email, nickname, gender, birthday, note);
@@ -73,5 +77,19 @@ public partial class AdminUsers : System.Web.UI.Page
     {
         UsersGridView.EditIndex = -1;
         FillGridView();
+    }
+
+    protected string GetGender(int genderNum)
+    {
+        if (genderNum == 1)
+        {
+            return "男";
+        } else if (genderNum == 2)
+        {
+            return "女";
+        } else
+        {
+            return "未知";
+        }
     }
 }

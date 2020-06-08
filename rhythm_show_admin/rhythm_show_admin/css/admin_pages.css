@@ -112,6 +112,7 @@ section {
     right: 50px;
     bottom: 30px;
     box-sizing: border-box;
+    overflow: auto;
     
     padding: 30px 60px;
     width: 75%;
@@ -174,7 +175,7 @@ section .users-gridview th {
     padding: 4px 2px;
 
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
     border-color: #60646d;
     border-top: 0;
     border-bottom: 0;
@@ -184,4 +185,69 @@ section .users-gridview th {
 
 section .users-gridview tr:nth-child(odd) {
     background-color: #d0f5ea;
+}
+
+.adduser-form {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    width: 36%;
+
+    text-align: left;
+    font-size: 20px;
+}
+
+.adduser-form .item {
+    display: block;
+    margin: 28px 0;
+}
+
+.adduser-form .item .item-input {
+    display: inline;
+
+    position: absolute;
+    right: 10px;
+
+    width: 70%;
+    height: 26px;
+
+    border-width: 1.3px;
+    border-radius: 5px;
+
+    font-size: 20px;
+}
+
+.adduser-form .item .item-input:focus {
+    border-width: 1.3px;
+    border-radius: 5px;
+}
+
+.calendar {
+    position: absolute;
+    right: 10px;
+}
+
+.adduser-form .under-calendar {
+    position: relative;
+    top: 190px;
+}
+
+.adduser-form .button-area {
+    padding-bottom: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.adduser-form .submit-button {
+    width: 60%;
+    height: 40px;
+
+    border-width: 0;
+    border-radius: 20px;
+
+    font-size: 20px;
+
+    background-image: linear-gradient(to bottom, #fff3cf, #fff3ef);
+    cursor: pointer;
 }

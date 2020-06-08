@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <title>用户管理</title>
-    <link rel="stylesheet" href="./css/admin_users_page.css" />
+    <link rel="stylesheet" href="./css/admin_pages.css" />
 </head>
 <body>
     <form runat="server">
@@ -24,7 +24,7 @@
             </ul>
         </nav>
         <section>
-            <button class="adduser-button" onclick="window.location.href='./AddUser.aspx'">新增用户</button>
+            <button class="adduser-button" onclick="window.location.href='./AddUser.aspx';window.event.returnValue=false;">新增用户</button>
             <asp:GridView CssClass="users-gridview" ID="UsersGridView" runat="server"
                 AutoGenerateColumns="False"
                 AllowPaging="True"
@@ -47,8 +47,19 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Nickname" HeaderText="昵称" SortExpression="Nickname" />
-                    <asp:BoundField DataField="Gender" HeaderText="性别" SortExpression="Gender" />
-                    <asp:BoundField DataField="Birthday" HeaderText="生日" SortExpression="Birthday" />
+                    <asp:TemplateField HeaderText="性别">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="GenderDropDownList" runat="server">
+                                <asp:ListItem Selected="True" Value="0">未知</asp:ListItem>
+                                <asp:ListItem Value="2">女</asp:ListItem>
+                                <asp:ListItem Value="1">男</asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="GenderLabel" runat="server" Text='<%# GetGender(Convert.ToInt32(Eval("Gender").ToString())) %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="Birthday" HeaderText="生日" SortExpression="Birthday" DataFormatString="{0:yyyy-MM-dd}" />
                     <asp:BoundField DataField="Note" HeaderText="个性签名" SortExpression="Note" />        
                     <asp:CommandField ShowEditButton="True" />
                     <asp:CommandField ShowDeleteButton="True" />   
