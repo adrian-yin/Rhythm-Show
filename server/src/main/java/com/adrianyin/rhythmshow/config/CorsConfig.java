@@ -16,7 +16,7 @@ public class CorsConfig {
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("GET");
         corsConfiguration.addAllowedMethod("POST");
-        corsConfiguration.addAllowedOrigin("http://127.0.0.1:8081");
+        corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setMaxAge(3600L);
         return corsConfiguration;

@@ -1,5 +1,6 @@
 package com.adrianyin.rhythmshow.controller;
 
+import com.adrianyin.rhythmshow.config.IgnoreSecurity;
 import com.adrianyin.rhythmshow.result.Result;
 import com.adrianyin.rhythmshow.result.ResultFactory;
 import com.adrianyin.rhythmshow.service.UserService;
@@ -28,6 +29,7 @@ public class RegisterController {
     }
 
     // 注册
+    @IgnoreSecurity
     @PostMapping(value = "/api/register")
     @ResponseBody
     public Result register(@RequestBody Map<String, String> requestBody,
@@ -54,6 +56,7 @@ public class RegisterController {
     }
 
     // 发送验证码
+    @IgnoreSecurity
     @PostMapping(value = "/api/verify")
     @ResponseBody
     public Result register(@RequestBody Map<String, String> requestBody,

@@ -44,13 +44,16 @@
                     // 加密密码
                     password = crypto.encrypt(password);
                     let requestData = {
-                        'email': email,
-                        'password': password
+                        email: email,
+                        password: password
                     };
                     http.fetchPost('login', requestData).then((res) => {
                         if (res.data.code === 200) {
-                            // TODO: 处理成功登录后逻辑
-
+                            // 保存token
+                            this.$store.commit('set_token', res.data.data.token);
+                            sessionStorage.setItem('token', res.data.data.token);
+                            // 跳转
+                            this.$router.push('/register');
                             return true;
                         } else {
                             alert(res.data.message);
@@ -163,6 +166,10 @@
         color: #fff;
 
         background: linear-gradient(to right, #7B68EE, #BA55D3);
+
+        &:active {
+            opacity: 0.5;
+        }
     }
 
     .login-box button:hover {

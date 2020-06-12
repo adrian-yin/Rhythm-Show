@@ -5,7 +5,7 @@ import Config from '../config/url.js';
 import store from '../store';
 import router from '../router';
 
-axios.defaults.timeout = 1800;
+axios.defaults.timeout = 20000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.withCredentials = true;
 
@@ -17,7 +17,7 @@ function buildApiUrl (url) {
 axios.interceptors.request.use((config) => {
         // 自动添加请求头token
         if (store.state.token) {
-            config.headers.common['Authorization'] = 'JWT ' + store.state.token;
+            config.headers.common['Authorization'] = store.state.token;
         }
         return config;
     }, (error) => {

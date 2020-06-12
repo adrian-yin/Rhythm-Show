@@ -3,9 +3,11 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 import store from '../store';
 
-import HelloWorld from "@/components/HelloWorld";
+// import HelloWorld from "@/components/HelloWorld";
+import Home from "@/components/Home";
 import Login from '@/components/Login';
 import Create from '@/components/Create';
+import Register from "@/components/Register";
 
 const router = new VueRouter({
     routes: [
@@ -13,8 +15,7 @@ const router = new VueRouter({
         {
             path: '/',
             name: 'Home',
-            // TODO: 改变主页组件
-            component: HelloWorld,
+            component: Home,
             meta: {
                 required: false,
                 title: '“炫·律”音乐旋律分享'
@@ -23,17 +24,27 @@ const router = new VueRouter({
         // 登录页
         {
             path: '/login',
-            name: Login,
+            name: 'Login',
             component: Login,
             meta: {
                 required: false,
                 title: '登录页'
             }
         },
-        // 钢琴页
+        // 注册页
+        {
+            path: '/register',
+            name: 'Register',
+            component: Register,
+            meta: {
+                required: false,
+                title: '注册页'
+            }
+        },
+        // 创作页
         {
             path: '/create',
-            name: Create,
+            name: 'Create',
             component: Create,
             meta: {
                 required: false,
@@ -43,13 +54,12 @@ const router = new VueRouter({
     ]
 })
 
-// 判断用户是否登陆，未登陆跳转至登陆页面
 router.beforeEach((to, from, next) => {
     // 自动添加title
     if (to.meta.title) {
         document.title = to.meta.title;
     }
-    // 判断是否需要登陆权限
+    // 判断是否需要登陆权限，未登陆跳转至登陆页面
     if (to.meta.required) {
         if (store.state.token) {
             next();

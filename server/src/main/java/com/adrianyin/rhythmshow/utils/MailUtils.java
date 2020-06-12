@@ -1,5 +1,7 @@
 package com.adrianyin.rhythmshow.utils;
 
+import org.springframework.scheduling.annotation.Async;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
