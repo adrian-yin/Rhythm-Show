@@ -4,22 +4,85 @@
             <h1>“炫·律”音乐旋律分享</h1>
             <div class="login-form">
                 <div class="item">
-                    <label for="username"></label>
-                    <input type="text" id="username" placeholder="用户名">
+                    <img src="../assets/mail.png" alt="">
+                    <label>
+                        <input type="text" placeholder="邮箱" v-model="email">
+                    </label>
                 </div>
                 <div class="item">
-                    <label for="password"></label>
-                    <input type="password" id="password" placeholder="密码">
+                    <img src="../assets/key.png" alt="">
+                    <label>
+                        <input type="password" placeholder="密码" v-model="password">
+                    </label>
                 </div>
             </div>
-            <button>登录</button>
+            <button v-on:click="loginSubmit">登录</button>
         </div>
     </div>
 </template>
 
 <script>
+    import http from '../utils/http';
+    import crypto from '../utils/crypto'
+
     export default {
-        name: "Login.vue"
+        name: "Login.vue",
+        data() {
+            return {
+                email: '',
+                password: ''
+            }
+        },
+        methods: {
+            loginSubmit() {
+                let _this = this;
+                // 验证输入
+                let checkResult = _this.checkInput();
+                if (checkResult.result) {
+                    let email = _this.email;
+                    let password = _this.password;
+                    // 加密密码
+                    password = crypto.encrypt(password);
+                    let requestData = {
+                        'email': email,
+                        'password': password
+                    };
+                    http.fetchPost('login', requestData).then((res) => {
+                        if (res.data.code === 200) {
+                            // TODO: 处理成功登录后逻辑
+
+                            return true;
+                        } else {
+                            alert(res.data.message);
+                            return false;
+                        }
+                    });
+                } else {
+                    alert(checkResult.message);
+                    return false;
+                }
+            },
+            // 输入校验函数
+            checkInput() {
+                let _this = this;
+                if (_this.email === '') {
+                    return {
+                        result: false,
+                        message: "邮箱不能为空"
+                    }
+                }
+                if (_this.password === '') {
+                    return {
+                        result: false,
+                        message: "密码不能为空"
+                    }
+                }
+                return {
+                    result: true,
+                    message: "验证通过"
+                }
+            }
+        }
     }
 </script>
 
@@ -55,27 +118,36 @@
     .login-form {
         margin-top: 30px;
 
-        .item input {
-            margin: 15px;
-            padding: 5px 10px;
-            width: 60%;
-            height: 16px;
+        .item {
+            position: relative;
 
-            border: 0;
-            border-bottom: 2px solid #ffffff;
+            img {
+                position: relative;
+                top: 3px;
+            }
 
-            font-size: 18px;
-            text-align: center;
-            color: #fff;
+            input {
+                margin: 15px;
+                padding: 5px 10px;
+                width: 60%;
+                height: 16px;
 
-            background: 0;
-            outline: 0;
-        }
+                border: 0;
+                border-bottom: 2px solid #ffffff;
 
-        .item input::-webkit-input-placeholder {
-            text-align: center;
-            font-size: 17px;
-            color: #fff;
+                font-size: 18px;
+                text-align: center;
+                color: #fff;
+
+                background: 0;
+                outline: 0;
+
+                &::-webkit-input-placeholder {
+                    text-align: center;
+                    font-size: 17px;
+                    color: #fff;
+                }
+            }
         }
     }
 

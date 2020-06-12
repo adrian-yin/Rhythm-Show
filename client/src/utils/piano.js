@@ -62,7 +62,7 @@ import b90 from '@/assets/piano_sounds/b90.mp3';
 
 import * as Tone from "tone";
 
-let samples = {
+const samples = {
     'E3': a48,
     'C2': a49,
     'D2': a50,
