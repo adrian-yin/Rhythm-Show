@@ -8,6 +8,7 @@ import Home from "@/components/Home";
 import Login from '@/components/Login';
 import Create from '@/components/Create';
 import Register from "@/components/Register";
+import Square from "@/components/Square";
 
 const router = new VueRouter({
     routes: [
@@ -28,7 +29,7 @@ const router = new VueRouter({
             component: Login,
             meta: {
                 required: false,
-                title: '登录页'
+                title: '登录'
             }
         },
         // 注册页
@@ -38,7 +39,7 @@ const router = new VueRouter({
             component: Register,
             meta: {
                 required: false,
-                title: '注册页'
+                title: '注册'
             }
         },
         // 创作页
@@ -47,8 +48,19 @@ const router = new VueRouter({
             name: 'Create',
             component: Create,
             meta: {
+                required: true,
+                title: '创作'
+            }
+        },
+        // 广场页
+        {
+            path: '/square',
+            name: 'Square',
+            component: Square,
+            meta: {
+                // TODO: 改为true
                 required: false,
-                title: '创作页'
+                title: '广场'
             }
         }
     ]

@@ -53,7 +53,7 @@
                             this.$store.commit('set_token', res.data.data.token);
                             sessionStorage.setItem('token', res.data.data.token);
                             // 跳转
-                            this.$router.push('/register');
+                            this.$router.push('/square');
                             return true;
                         } else {
                             alert(res.data.message);
