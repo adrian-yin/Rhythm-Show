@@ -202,8 +202,6 @@
 
         border-radius: 15px;
 
-        background-image: linear-gradient(to top, #a8edea, #fed6e3);
-
         .note {
             position: relative;
 

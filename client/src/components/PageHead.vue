@@ -1,8 +1,8 @@
 <template>
     <header>
-        <div class="title">
+        <h1 class="title" v-on:click="$router.push('/')">
             炫·律
-        </div>
+        </h1>
         <label class="search-box">
             <img src="../assets/search.png" alt="">
             <input type="text" v-on:keypress="searchScore">
@@ -116,7 +116,7 @@
         height: 80px;
         min-width: 980px;
 
-        background-color: #00000080;
+        background-color: #7B626B;
     }
 
     .title {
@@ -129,6 +129,8 @@
         font-size: 35px;
         letter-spacing: 15px;
         color: #fff;
+
+        cursor: pointer;
     }
 
     .search-box {
@@ -219,7 +221,7 @@
         color: #fff;
         letter-spacing: 3px;
 
-        background-color: #00000080;
+        background-color: #5E5472;
 
         /* 向上箭头 */
         &::before {
@@ -229,7 +231,7 @@
             top: 0;
 
             border: 15px solid;
-            border-color: transparent transparent #00000080;
+            border-color: transparent transparent #5E5472;
 
             transform: translate(0, -30px);
         }

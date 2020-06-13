@@ -32,7 +32,10 @@
         padding: 0;
     }
 
-    body {
+    html, body {
         height: 100vh;
+        background-image: linear-gradient(to top, #9795f0, #fbc8d4);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }
 </style>

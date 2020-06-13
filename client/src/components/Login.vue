@@ -97,8 +97,6 @@
 
         height: 100%;
         width: 100%;
-
-        background-image: linear-gradient(to top, #9795f0, #fbc8d4);
     }
 
     h1 {

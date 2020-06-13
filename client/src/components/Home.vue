@@ -17,7 +17,6 @@
 <style lang="scss" scoped>
     .main {
         height: 100%;
-        background-image: linear-gradient(to top, #9795f0, #fbc8d4);
     }
 
     .title {
