@@ -18,6 +18,9 @@ axios.interceptors.request.use((config) => {
         // 自动添加请求头token
         if (store.state.token) {
             config.headers.common['Authorization'] = store.state.token;
+        } else if (sessionStorage.getItem('token')) {
+            // sessionStorage中存储的token可以防止刷新页面token丢失
+            config.headers.common['Authorization'] = sessionStorage.getItem('token');
         }
         return config;
     }, (error) => {

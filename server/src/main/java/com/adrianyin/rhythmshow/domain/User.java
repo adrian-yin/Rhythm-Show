@@ -6,34 +6,34 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 @JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name = "Email", unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "Nickname")
+    @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "Gender")
+    @Column(name = "gender")
     private int gender;
 
-    @Column(name = "Birthday")
+    @Column(name = "birthday")
     private Date birthday;
 
-    @Column(name = "Note")
+    @Column(name = "note")
     private String note;
 
-    @Column(name = "Role")
+    @Column(name = "role")
     private int role;
 
     public int getId() {

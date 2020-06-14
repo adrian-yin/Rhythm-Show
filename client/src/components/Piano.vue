@@ -114,6 +114,12 @@
             // 创建键盘输入事件
             this.addKeyBoardEvent();
         },
+        destroyed() {
+            // 移除键盘输入事件
+            let _this = this;
+            document.removeEventListener('keydown', _this.keydownFunction);
+            document.removeEventListener('keyup', _this.keyupFunction);
+        },
         methods: {
             // 播放一个音
             playNote(noteName, duration='2n') {
@@ -138,64 +144,67 @@
                     this.playNote(note.name);
                 }
             },
+            keydownFunction(event) {
+                let _this = this;
+                let pressedKeyName = event.key.toLocaleUpperCase();
+                let keyName;
+                if (pressedKeyName === "SHIFT") {
+                    this.isBlackKey = true;
+                }
+                if (this.isBlackKey) {
+                    keyName = 'b' + pressedKeyName;
+                } else {
+                    keyName = pressedKeyName;
+                }
+
+                // 防止一次按键连续触发
+                if (_this.lockedKey.indexOf(keyName) === -1) {
+                    // 锁定按键
+                    _this.lockedKey.push(keyName);
+                    let note = _this.getNoteByKeyName(keyName);
+                    if (note) {
+                        _this.playNote(note.name);
+                        // 修改css样式
+                        if (note.type === 'white') {
+                            document.querySelector(`[data-id="${note.id}"]`)
+                                .classList.add('white-key-active');
+                        } else if (note.type === 'black') {
+                            document.querySelector(`[data-id="${note.id}"]`)
+                                .classList.add('black-key-active');
+                        }
+                    }
+                }
+            },
+            keyupFunction(event) {
+                let _this = this;
+                let pressedKeyName = event.key.toLocaleUpperCase();
+                let keyName;
+                if (this.isBlackKey) {
+                    keyName = 'b' + pressedKeyName;
+                } else {
+                    keyName = pressedKeyName;
+                }
+                // 取消按键锁定
+                delete _this.lockedKey[_this.lockedKey.indexOf(keyName)];
+                if (pressedKeyName === "SHIFT") {
+                    this.isBlackKey = false;
+                }
+                let note = _this.getNoteByKeyName(keyName);
+                if (note) {
+                    if (note.type === 'white') {
+                        document.querySelector(`[data-id="${note.id}"]`)
+                            .classList.remove('white-key-active');
+                    } else if (note.type === 'black') {
+                        document.querySelector(`[data-id="${note.id}"]`)
+                            .classList.remove('black-key-active');
+                    }
+                }
+            },
             // 添加键盘按下和抬起事件
             addKeyBoardEvent() {
                 let _this = this;
-                document.addEventListener('keydown', function(event) {
-                    let pressedKeyName = event.key.toLocaleUpperCase();
-                    let keyName;
-                    if (pressedKeyName === "SHIFT") {
-                        this.isBlackKey = true;
-                    }
-                    if (this.isBlackKey) {
-                        keyName = 'b' + pressedKeyName;
-                    } else {
-                        keyName = pressedKeyName;
-                    }
-
-                    // 防止一次按键连续触发
-                    if (_this.lockedKey.indexOf(keyName) === -1) {
-                        // 锁定按键
-                        _this.lockedKey.push(keyName);
-                        let note = _this.getNoteByKeyName(keyName);
-                        if (note) {
-                            _this.playNote(note.name);
-                            // 修改css样式
-                            if (note.type === 'white') {
-                                document.querySelector(`[data-id="${note.id}"]`)
-                                    .classList.add('white-key-active');
-                            } else if (note.type === 'black') {
-                                document.querySelector(`[data-id="${note.id}"]`)
-                                    .classList.add('black-key-active');
-                            }
-                        }
-                    }
-                }, false);
-
-                document.addEventListener('keyup', function(event) {
-                    let pressedKeyName = event.key.toLocaleUpperCase();
-                    let keyName;
-                    if (this.isBlackKey) {
-                        keyName = 'b' + pressedKeyName;
-                    } else {
-                        keyName = pressedKeyName;
-                    }
-                    // 取消按键锁定
-                    delete _this.lockedKey[_this.lockedKey.indexOf(keyName)];
-                    if (pressedKeyName === "SHIFT") {
-                        this.isBlackKey = false;
-                    }
-                    let note = _this.getNoteByKeyName(keyName);
-                    if (note) {
-                        if (note.type === 'white') {
-                            document.querySelector(`[data-id="${note.id}"]`)
-                                .classList.remove('white-key-active');
-                        } else if (note.type === 'black') {
-                            document.querySelector(`[data-id="${note.id}"]`)
-                                .classList.remove('black-key-active');
-                        }
-                    }
-                }, false);
+                document.addEventListener('keydown', _this.keydownFunction, false);
+                document.addEventListener('keyup', _this.keyupFunction, false);
             }
         }
     }

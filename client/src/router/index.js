@@ -9,9 +9,11 @@ import Login from '@/components/Login';
 import Create from '@/components/Create';
 import Register from "@/components/Register";
 import Square from "@/components/Square";
+import Play from "@/components/Play";
 
 const router = new VueRouter({
     routes: [
+        // TODO: 将需求权限的页改为true
         // 主页
         {
             path: '/',
@@ -48,7 +50,7 @@ const router = new VueRouter({
             name: 'Create',
             component: Create,
             meta: {
-                required: true,
+                required: false,
                 title: '创作'
             }
         },
@@ -58,9 +60,18 @@ const router = new VueRouter({
             name: 'Square',
             component: Square,
             meta: {
-                // TODO: 改为true
                 required: false,
                 title: '广场'
+            }
+        },
+        // 演奏页
+        {
+            path: '/play',
+            name: 'Play',
+            component: Play,
+            meta: {
+                required: false,
+                title: '演奏'
             }
         }
     ]
