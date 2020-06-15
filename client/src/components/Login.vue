@@ -49,11 +49,16 @@
                     };
                     http.fetchPost('login', requestData).then((res) => {
                         if (res.data.code === 200) {
-                            // 保存token
-                            this.$store.commit('set_token', res.data.data.token);
-                            sessionStorage.setItem('token', res.data.data.token);
-                            // 跳转
-                            this.$router.push('/square');
+                            // 管理员跳转至后台登录页面
+                            if (res.data.data.role === '1') {
+                                window.location = 'http://127.0.0.1:8083/AdminLogin.aspx';
+                            } else {
+                                // 保存token
+                                this.$store.commit('set_token', res.data.data.token);
+                                sessionStorage.setItem('token', res.data.data.token);
+                                // 跳转
+                                this.$router.push('/square');
+                            }
                             return true;
                         } else {
                             alert(res.data.message);

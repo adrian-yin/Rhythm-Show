@@ -153,6 +153,7 @@ section .gridview {
     top: 90px;
     
     width: 90%;
+    overflow: scroll;
 
     background-color: #ffffff;
 }

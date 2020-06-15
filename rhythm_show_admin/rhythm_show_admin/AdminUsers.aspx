@@ -27,7 +27,8 @@
             <button class="adduser-button" onclick="window.location.href='./AddUser.aspx';window.event.returnValue=false;">新增用户</button>
             <asp:GridView CssClass="gridview" ID="UsersGridView" runat="server"
                 AutoGenerateColumns="False"
-                AllowPaging="True"
+                AllowPaging="False"
+                AutoPaging="False"
                 GridLines="None"
                 OnRowDeleting="UsersGridView_RowDeleting"
                 OnRowEditing="UsersGridView_RowEditing"

@@ -18,6 +18,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
     public User getByEmailAndPassword(String email, String password) {
         return userRepository.getByEmailAndPassword(email, password);
     }

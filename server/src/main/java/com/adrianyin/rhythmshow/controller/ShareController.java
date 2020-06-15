@@ -88,7 +88,8 @@ public class ShareController {
     public Result addWavBob(@RequestParam(name = "wavBlob") MultipartFile wavBlob,
                            @RequestParam(name = "shareId") int shareId,
                            @CurrentUser User user) throws IOException {
-        File file = new File("F:/Projects/Rhythm-Show/resources/records/record_" +
+        File file = new File(
+                "F:/Projects/Rhythm-Show/rhythm_show_admin/rhythm_show_admin/resources/records/record_" +
                 Integer.toString(shareId) + ".wav");
         if (!wavBlob.isEmpty()) {
             wavBlob.transferTo(file);
@@ -102,7 +103,8 @@ public class ShareController {
     @ResponseBody
     public void recordFile(@RequestParam(name = "shareId") int shareId,
                            HttpServletResponse response) throws IOException {
-        FileInputStream inputStream = new FileInputStream("F:/Projects/Rhythm-Show/resources/records/record_" +
+        FileInputStream inputStream = new FileInputStream(
+                "F:/Projects/Rhythm-Show/rhythm_show_admin/rhythm_show_admin/resources/records/record_" +
                 Integer.toString(shareId) + ".wav");
         int i = inputStream.available();
         byte[] buff = new byte[i];

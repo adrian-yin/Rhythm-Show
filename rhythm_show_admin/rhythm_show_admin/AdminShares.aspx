@@ -43,7 +43,7 @@
             </div>
             <asp:GridView CssClass="gridview" ID="SharesGridView" runat="server"
                 AutoGenerateColumns="False"
-                AllowPaging="True"
+                AllowPaging="False"
                 GridLines="None"
                 OnRowDeleting="SharesGridView_RowDeleting"
             >
@@ -54,7 +54,7 @@
                             <svg class="play-icon" style="cursor: pointer" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" onclick="playAudio(this)">
                                 <path d="M514 114.3c-219.9 0-398.9 178.9-398.9 398.9 0.1 219.9 179 398.8 398.9 398.8 219.9 0 398.8-178.9 398.8-398.8S733.9 114.3 514 114.3z m173 421.9L437.1 680.5c-17.7 10.2-39.8-2.6-39.8-23V368.9c0-20.4 22.1-33.2 39.8-23L687 490.2c17.7 10.2 17.7 35.8 0 46z" fill="#60646d"></path>
                             </svg>
-                            <audio id="audioToPlay" src='<%# "/server/resources/records/record_" + Eval("Id").ToString() + ".wav"%>' hidden="hidden" onended="changeIconColor(this)"></audio>
+                            <audio id="audioToPlay" src='<%# "/resources/records/record_" + Eval("Id").ToString() + ".wav"%>' hidden="hidden" onended="changeIconColor(this)"></audio>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Id" HeaderText="分享ID" SortExpression="Id"/>
