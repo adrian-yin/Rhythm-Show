@@ -23,6 +23,7 @@
 <script>
     // import Url from '@/config/url';
     // import defaultAvatar from '@/assets/default_avatar.jpg';
+    import http from "@/utils/http";
     import store from '../store';
 
     export default {
@@ -76,7 +77,21 @@
             searchScore(event) {
                 if (event.key === 'Enter') {
                     // TODO: 完成搜索乐谱
-                    alert(event.target.value);
+                    if (event.target.value === '') {
+                        alert("搜索内容不能为空");
+                        return;
+                    }
+                    http.fetchPost('getscoreurl', {
+                        name: event.target.value
+                    }).then((res) => {
+                        if (res.data.code === 200) {
+                            window.location = res.data.data.url;
+                            return true;
+                        } else {
+                            alert(res.data.message);
+                            return false;
+                        }
+                    });
                 }
             },
             toSelfUserPage() {
