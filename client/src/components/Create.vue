@@ -21,6 +21,7 @@
             <button v-on:click="addStopNote">休止符</button>
         </div>
         <div class="submit-area">
+            <button class="record-button" v-on:click="$router.push('/record')">录音</button>
             <button v-on:click="playScore">播放</button>
             <button v-on:click="saveWork">保存</button>
             <button class="publish-button" v-on:click="publishWork">发布</button>
@@ -334,6 +335,11 @@
             &:active {
                 opacity: 0.5;
             }
+        }
+        .record-button {
+            position: relative;
+            right: 45%;
+            font-weight: bold;
         }
         .publish-button {
             background-color: #fed6e3;

@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -77,6 +80,37 @@ public class ShareController {
     public Result addShare(@RequestBody Share share, @CurrentUser User user) {
         share.setUser(user);
         shareService.addNewShare(share);
+        return ResultFactory.buildSuccessResult(share);
+    }
+
+    @PostMapping("/api/saverecord")
+    @ResponseBody
+    public Result addWavBob(@RequestParam(name = "wavBlob") MultipartFile wavBlob,
+                           @RequestParam(name = "shareId") int shareId,
+                           @CurrentUser User user) throws IOException {
+        File file = new File("F:/Projects/Rhythm-Show/resources/records/record_" +
+                Integer.toString(shareId) + ".wav");
+        if (!wavBlob.isEmpty()) {
+            wavBlob.transferTo(file);
+        }
         return ResultFactory.buildSuccessResult("添加成功");
+    }
+
+    // 根据分享id获取录音
+    @IgnoreSecurity
+    @GetMapping("/api/getrecord")
+    @ResponseBody
+    public void recordFile(@RequestParam(name = "shareId") int shareId,
+                           HttpServletResponse response) throws IOException {
+        FileInputStream inputStream = new FileInputStream("F:/Projects/Rhythm-Show/resources/records/record_" +
+                Integer.toString(shareId) + ".wav");
+        int i = inputStream.available();
+        byte[] buff = new byte[i];
+        inputStream.read(buff);
+        inputStream.close();
+        response.setContentType("audio/wav");
+        OutputStream out = response.getOutputStream();
+        out.write(buff);
+        out.close();
     }
 }

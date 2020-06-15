@@ -10,6 +10,7 @@ import Create from '@/components/Create';
 import Register from "@/components/Register";
 import Square from "@/components/Square";
 import Play from "@/components/Play";
+import Record from "@/components/Record";
 
 const router = new VueRouter({
     routes: [
@@ -52,6 +53,16 @@ const router = new VueRouter({
             meta: {
                 required: false,
                 title: '创作'
+            }
+        },
+        // 录音页
+        {
+            path: '/record',
+            name: 'Record',
+            component: Record,
+            meta: {
+                required: false,
+                title: '录音'
             }
         },
         // 广场页

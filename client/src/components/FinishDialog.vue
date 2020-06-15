@@ -84,11 +84,14 @@
                         type: _this.type,
                         isOriginal: _this.isOriginal,
                         isPublished: _this.isPublished,
-                        musicScore: _this.musicScore
+                        musicScore: _this.musicScore,
                     };
                     http.fetchPost('addshare', requestData).then((res) => {
                         if (res.data.code === 200) {
                             alert('成功！');
+                            if (res.data.data.type === 0) {
+                                _this.$parent.saveRecord(res.data.data.id);
+                            }
                             _this.$router.push('/square');
                             return true;
                         } else {

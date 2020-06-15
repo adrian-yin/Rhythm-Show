@@ -45,7 +45,7 @@
                     <div class="username" v-on:click="toUserPage">{{share.user.nickname}}</div>
 <!--                    添加播放和演奏按钮-->
                     <img class="sound-button" src="../assets/sound.png" alt="播放"
-                         v-on:click="playScore(share.musicScore)">
+                         v-on:click="playMusic(share)">
                     <img class="play-button" src="../assets/play.png" alt="演奏"
                          v-if="share.showPlayImg"
                          v-on:click="toPlayPage(share.musicScore)">
@@ -54,6 +54,7 @@
                 <div class="bottom-text" v-if="showBottom">已经到达底部</div>
             </div>
         </section>
+        <audio hidden></audio>
     </div>
 </template>
 
@@ -64,6 +65,7 @@
     import piano from '@/utils/piano';
     import isLike from '@/assets/is_like.png';
     import isCollect from '@/assets/is_collect.png';
+    import Config from '../config/url';
 
     // 控制是否可以继续发送翻页请求
     let canAddPage = true;
@@ -230,8 +232,18 @@
             toUserPage() {
                 // TODO: 完成跳转到用户页面
             },
-            playScore(musicScore) {
-                piano.playByScoreText(musicScore);
+            playMusic(share) {
+                // let _this = this;
+                if (share.type === 1) {
+                    // 播放曲谱
+                    piano.playByScoreText(share.musicScore);
+                } else {
+                    // 播放wav
+                    let audio = document.getElementsByTagName('audio')[0];
+                    audio.src = `${Config.apiUrl}/${Config.apiPrefix}/getrecord?shareId=` + share.id;
+                    audio.load();
+                    audio.play();
+                }
             },
             toPlayPage(musicScore) {
                 this.$router.push({
@@ -316,7 +328,7 @@
 
             .label {
                 position: absolute;
-                left: 300px;
+                left: 500px;
                 top: 3px;
                 color: #fed6e3;
             }
