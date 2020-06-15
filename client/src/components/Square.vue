@@ -42,7 +42,7 @@
                              v-on:click="clickCollect($event, share)">
                         <div class="num">{{share.collectNum}}</div>
                     </div>
-                    <div class="username" v-on:click="toUserPage">{{share.user.nickname}}</div>
+                    <div class="username" v-on:click="toUserPage(share.user.id)">{{share.user.nickname}}</div>
 <!--                    添加播放和演奏按钮-->
                     <img class="sound-button" src="../assets/sound.png" alt="播放"
                          v-on:click="playMusic(share)">
@@ -83,7 +83,7 @@
                 types: [0, 1],
                 isOriginals: [0, 1],
                 sortByString: 'time',
-                showBottom: false
+                showBottom: false,
             }
         },
         created() {
@@ -229,8 +229,14 @@
                     }
                 });
             },
-            toUserPage() {
-                // TODO: 完成跳转到用户页面
+            toUserPage(userId) {
+                let _this = this;
+                _this.$router.push({
+                    path: '/user',
+                    query: {
+                        userId: userId
+                    }
+                });
             },
             playMusic(share) {
                 // let _this = this;

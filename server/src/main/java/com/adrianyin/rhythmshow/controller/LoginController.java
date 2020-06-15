@@ -32,7 +32,7 @@ public class LoginController {
         String password = requestBody.get("password");
 
         // 如果邮箱是管理员则返回管理员角色信息
-        User adminUser = userService.getByEmail(email);
+        User adminUser = userService.getAdminByEmail(email);
         if (adminUser != null) {
             Map<String, String> data = new HashMap<String, String>();
             data.put("role", Integer.toString(adminUser.getRole()));

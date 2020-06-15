@@ -11,6 +11,9 @@ import Register from "@/components/Register";
 import Square from "@/components/Square";
 import Play from "@/components/Play";
 import Record from "@/components/Record";
+import User from "@/components/User";
+import Works from "@/components/Works";
+import Collects from "@/components/Collects";
 
 const router = new VueRouter({
     routes: [
@@ -83,6 +86,36 @@ const router = new VueRouter({
             meta: {
                 required: false,
                 title: '演奏'
+            }
+        },
+        // 用户主页
+        {
+            path: '/user',
+            name: 'User',
+            component: User,
+            meta: {
+                required: false,
+                title: '个人主页'
+            }
+        },
+        // 作品页
+        {
+            path: '/works',
+            name: 'Works',
+            component: Works,
+            meta: {
+                required: false,
+                title: '作品页'
+            }
+        },
+        // 收藏页
+        {
+            path: '/collects',
+            name: 'Collects',
+            component: Collects,
+            meta: {
+                required: false,
+                title: '收藏页'
             }
         }
     ]

@@ -49,7 +49,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }
-
         // 验证token
         if (JwtUtils.verify(token)) {
             request.setAttribute("currentUser", user);

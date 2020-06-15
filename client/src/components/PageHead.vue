@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h1 class="title" v-on:click="$router.push('/')">
+        <h1 class="title" v-on:click="$router.push('/square')">
             炫·律
         </h1>
         <label class="search-box">
@@ -12,11 +12,12 @@
              v-on:mouseenter="showDropList" v-on:mouseleave="hideDropList">
         <button class="create-button" v-on:click="$router.push('/create')">开始创作</button>
         <div class="drop-list" v-on:mouseenter="showDropList" v-on:mouseleave="hideDropList">
-            <button class="self-button" v-on:click="toSelfUserPage">adrianyin@yeah.net</button>
+            <button class="self-button" v-on:click="toSelfUserPage">{{user.nickname}}</button>
             <div class="link" v-on:click="toSelfWorkPage">我的作品</div>
             <div class="link" v-on:click="toSelfCollectPage">个人收藏</div>
             <button v-on:click="logout">退出登录</button>
         </div>
+<!--        <qq-music-player class="music-player"></qq-music-player>-->
     </header>
 </template>
 
@@ -25,18 +26,31 @@
     // import defaultAvatar from '@/assets/default_avatar.jpg';
     import http from "@/utils/http";
     import store from '../store';
+    // import QQMusicPlayer from "@/components/QQMusicPlayer";
 
     export default {
         name: "PageHead",
-        props: {
-            nickname: String,
-            userId: Number
-        },
+        // components: {
+        //     'qq-music-player': QQMusicPlayer
+        // },
         data() {
             return {
                 // 用来判断鼠标是否在下拉列表和头像区域
-                inDropList: false
+                inDropList: false,
+                user: null
             }
+        },
+        created() {
+            let _this = this;
+            // 获取当前用户
+            http.fetchGet('currentuser', {}).then((res) => {
+                if (res.data.code === 200) {
+                    _this.user = res.data.data;
+                    return true;
+                } else {
+                    return false;
+                }
+            });
         },
         // computed: {
         //     avatarUrl: function() {
@@ -95,26 +109,29 @@
                 }
             },
             toSelfUserPage() {
-                this.$router.push({
+                let _this = this;
+                _this.$router.push({
                     path: '/user',
                     query: {
-                        userId: this.userId.toString()
+                        userId: _this.user.id
                     }
                 });
             },
             toSelfWorkPage() {
-                this.$router.push({
-                    path: '/work',
+                let _this = this;
+                _this.$router.push({
+                    path: '/works',
                     query: {
-                        userId: this.userId.toString()
+                        userId: _this.user.id
                     }
                 });
             },
             toSelfCollectPage() {
-                this.$router.push({
-                    path: '/collect',
+                let _this = this;
+                _this.$router.push({
+                    path: '/collects',
                     query: {
-                        userId: this.userId.toString()
+                        userId: _this.user.id
                     }
                 });
             }
@@ -189,6 +206,15 @@
 
         cursor: pointer;
     }
+
+    /*
+    .music-player {
+        position: absolute;
+        top: 50%;
+        right: 400px;
+        transform: translate(0, -50%);
+    }
+    */
 
     .create-button {
         position: absolute;

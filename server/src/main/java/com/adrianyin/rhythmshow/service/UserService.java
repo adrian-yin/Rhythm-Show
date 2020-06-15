@@ -49,4 +49,8 @@ public class UserService {
         int userId = JwtUtils.getIdByToken(token);
         return this.getById(userId);
     }
+
+    public User getAdminByEmail(String email) {
+        return userRepository.getByEmailAndRole(email, 1);
+    }
 }
