@@ -32,6 +32,14 @@ public class Share {
     @Column(name = "isoriginal")
     private int isOriginal;
 
+    public int getIsPublished() {
+        return isPublished;
+    }
+
+    public void setIsPublished(int isPublished) {
+        this.isPublished = isPublished;
+    }
+
     @Column(name = "ispublished")
     private int isPublished;
 

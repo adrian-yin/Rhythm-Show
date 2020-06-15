@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <piano v-on:getNote="addNote"></piano>
+        <piano ref="piano" v-on:getNote="addNote"></piano>
         <div class="score-area">
             <div class="note"
                  v-for="note in sortedNotes"
@@ -25,17 +25,33 @@
             <button v-on:click="saveWork">保存</button>
             <button class="publish-button" v-on:click="publishWork">发布</button>
         </div>
+        <finish-dialog
+                :dialog-type="'保存'"
+                :type="1"
+                :is-published="0"
+                :music-score="scoreText"
+                v-if="showSaveDialog">
+        </finish-dialog>
+        <finish-dialog
+                :dialog-type="'发布'"
+                :type="1"
+                :is-published="1"
+                :music-score="scoreText"
+                v-if="showPublishDialog">
+        </finish-dialog>
     </div>
 </template>
 
 <script>
     import Piano from '@/components/Piano';
     import piano from '../utils/piano'
+    import FinishDialog from "@/components/FinishDialog";
 
     export default {
         name: "Create",
         components: {
-            piano: Piano,
+            'piano': Piano,
+            'finish-dialog': FinishDialog
         },
         data() {
             return {
@@ -46,7 +62,9 @@
                 }],
                 scoreText: '',
                 noteId: 1,
-                selectedNoteId: 0
+                selectedNoteId: 0,
+                showSaveDialog: false,
+                showPublishDialog: false
             }
         },
         // 对notes按id进行排序
@@ -160,15 +178,40 @@
                 this.scoreText = noteArr.join(' ');
             },
             // 保存
-            // TODO: 完成保存方法
             saveWork() {
-                this.notesToText();
-                console.log(this.scoreText);
+                let _this = this;
+                // 将音符转成乐谱字符串
+                _this.notesToText();
+                // 清理键盘监听事件
+                document.removeEventListener('keydown', _this.$refs.piano.keydownFunction);
+                document.removeEventListener('keyup', _this.$refs.piano.keyupFunction);
+                // 隐藏发布窗口
+                _this.showPublishDialog = false;
+                // 显示保存窗口
+                _this.showSaveDialog = true;
             },
             // 发布
-            // TODO: 完成发布方法
             publishWork() {
-
+                let _this = this;
+                // 将音符转成乐谱字符串
+                _this.notesToText();
+                // 清理键盘监听事件
+                document.removeEventListener('keydown', _this.$refs.piano.keydownFunction);
+                document.removeEventListener('keyup', _this.$refs.piano.keyupFunction);
+                // 隐藏保存窗口
+                _this.showSaveDialog = false;
+                // 显示发布窗口
+                _this.showPublishDialog = true;
+            },
+            // 关闭弹窗
+            hideDialog() {
+                let _this = this;
+                // 恢复监听事件
+                document.addEventListener('keydown', _this.$refs.piano.keydownFunction);
+                document.addEventListener('keyup', _this.$refs.piano.keyupFunction);
+                // 隐藏保存和发布窗口
+                _this.showPublishDialog = false;
+                _this.showSaveDialog = false;
             },
             // 播放
             playScore() {

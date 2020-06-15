@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Service
 public class ShareService {
@@ -52,6 +53,13 @@ public class ShareService {
 
     public void collectAddOne(Share share) {
         share.setCollectNum(share.getCollectNum() + 1);
+        shareRepository.save(share);
+    }
+
+    public void addNewShare(Share share) {
+        share.setLikeNum(0);
+        share.setCollectNum(0);
+        share.setPublishTime(new Date());
         shareRepository.save(share);
     }
 }

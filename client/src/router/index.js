@@ -61,7 +61,7 @@ const router = new VueRouter({
             component: Square,
             meta: {
                 required: false,
-                title: '广场'
+                title: '广场',
             }
         },
         // 演奏页

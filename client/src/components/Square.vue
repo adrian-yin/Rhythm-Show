@@ -80,7 +80,7 @@
                 pageSize: 2,
                 types: [0, 1],
                 isOriginals: [0, 1],
-                sortByString: "likeNum",
+                sortByString: 'time',
                 showBottom: false
             }
         },
@@ -90,17 +90,24 @@
         mounted() {
             let _this = this;
             // 滚动条距底部50px加载下一页
-            $(document).scroll(function() {
+            document.addEventListener('scroll', _this.scrollListener);
+            // 添加单选钮监听事件
+            _this.addRadioListeners();
+        },
+        destroyed() {
+            let _this = this;
+            // 销毁滚动加载事件
+            document.removeEventListener('scroll', _this.scrollListener);
+        },
+        methods: {
+            scrollListener() {
+                let _this = this;
                 let distanceToBottom =  $(document).height() - $(document).scrollTop() - window.innerHeight;
                 if (distanceToBottom <= 50 && canAddPage) {
                     canAddPage = false;
                     _this.getShares();
                 }
-            });
-            // 添加单选钮监听事件
-            _this.addRadioListeners();
-        },
-        methods: {
+            },
             // 添加筛选单选钮的触发事件
             addRadioListeners() {
                 let _this = this;

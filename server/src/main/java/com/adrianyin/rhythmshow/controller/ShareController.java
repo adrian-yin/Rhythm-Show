@@ -62,7 +62,7 @@ public class ShareController {
 
     @PostMapping("/api/collect")
     @ResponseBody
-    public Result addCollect(@RequestBody Map<String,Integer> requestBody, @CurrentUser User user) {
+    public Result addCollect(@RequestBody Map<String, Integer> requestBody, @CurrentUser User user) {
         int shareId = requestBody.get("shareId");
         Share share = shareService.getById(shareId);
         if (collectService.getByUserAndShare(user, share) != null) {
@@ -70,5 +70,13 @@ public class ShareController {
         }
         collectService.addWithUserAndShare(user, share);
         return ResultFactory.buildSuccessResult("收藏成功");
+    }
+
+    @PostMapping("/api/addshare")
+    @ResponseBody
+    public Result addShare(@RequestBody Share share, @CurrentUser User user) {
+        share.setUser(user);
+        shareService.addNewShare(share);
+        return ResultFactory.buildSuccessResult("添加成功");
     }
 }
