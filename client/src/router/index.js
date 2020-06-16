@@ -54,7 +54,7 @@ const router = new VueRouter({
             name: 'Create',
             component: Create,
             meta: {
-                required: false,
+                required: true,
                 title: '创作'
             }
         },
@@ -64,7 +64,7 @@ const router = new VueRouter({
             name: 'Record',
             component: Record,
             meta: {
-                required: false,
+                required: true,
                 title: '录音'
             }
         },
@@ -74,7 +74,7 @@ const router = new VueRouter({
             name: 'Square',
             component: Square,
             meta: {
-                required: false,
+                required: true,
                 title: '广场',
             }
         },
@@ -84,7 +84,7 @@ const router = new VueRouter({
             name: 'Play',
             component: Play,
             meta: {
-                required: false,
+                required: true,
                 title: '演奏'
             }
         },
@@ -94,7 +94,7 @@ const router = new VueRouter({
             name: 'User',
             component: User,
             meta: {
-                required: false,
+                required: true,
                 title: '个人主页'
             }
         },
@@ -104,7 +104,7 @@ const router = new VueRouter({
             name: 'Works',
             component: Works,
             meta: {
-                required: false,
+                required: true,
                 title: '作品页'
             }
         },
@@ -114,7 +114,7 @@ const router = new VueRouter({
             name: 'Collects',
             component: Collects,
             meta: {
-                required: false,
+                required: true,
                 title: '收藏页'
             }
         }
