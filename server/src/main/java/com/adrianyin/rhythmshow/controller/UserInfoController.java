@@ -82,4 +82,12 @@ public class UserInfoController {
         List<Share> collects = collectService.getShareByUser(user);
         return ResultFactory.buildSuccessResult(collects);
     }
+
+    @GetMapping("/api/getworks")
+    @ResponseBody
+    public Result getWorks(@RequestParam(name = "userId") int userId) {
+        User user = userService.getById(userId);
+        List<Share> works = shareService.getByUser(user);
+        return ResultFactory.buildSuccessResult(works);
+    }
 }
