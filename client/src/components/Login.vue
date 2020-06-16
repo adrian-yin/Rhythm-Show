@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="login-box">
-            <h1>“炫·律”音乐旋律分享</h1>
+            <h1 v-on:click="$router.push('/')">“炫·律”音乐旋律分享</h1>
             <div class="login-form">
                 <div class="item">
                     <img src="../assets/mail.png" alt="">
@@ -106,7 +106,8 @@
 
     h1 {
         margin-top: 15px;
-        color: #fff
+        color: #fff;
+        cursor: pointer;
     }
 
     .login-box {

@@ -43,7 +43,6 @@
                         <div class="num">{{share.collectNum}}</div>
                     </div>
                     <div class="username" v-on:click="toUserPage(share.user.id)">{{share.user.nickname}}</div>
-<!--                    添加播放和演奏按钮-->
                     <img class="sound-button" src="../assets/sound.png" alt="播放"
                          v-on:click="playMusic(share)">
                     <img class="play-button" src="../assets/play.png" alt="演奏"

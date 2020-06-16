@@ -6,10 +6,9 @@ import com.adrianyin.rhythmshow.result.Result;
 import com.adrianyin.rhythmshow.result.ResultFactory;
 import com.adrianyin.rhythmshow.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 public class UserInfoController {
@@ -35,5 +34,34 @@ public class UserInfoController {
     @ResponseBody
     public Result getCurrentUser(@CurrentUser User user) {
         return ResultFactory.buildSuccessResult(user);
+    }
+
+    @PostMapping("/api/changeuserinfo")
+    @ResponseBody
+    public Result changeUserInfo(@RequestBody User userInfo) {
+        User user = userService.getById(userInfo.getId());
+        user.setNickname(userInfo.getNickname());
+        user.setNote(userInfo.getNote());
+        user.setBirthday(userInfo.getBirthday());
+        user.setGender(userInfo.getGender());
+
+        userService.changeUserInfo(user);
+        return ResultFactory.buildSuccessResult("修改成功");
+    }
+
+    @PostMapping("/api/changepassword")
+    @ResponseBody
+    public Result changePassword(@RequestBody Map<String, String> requestBody) {
+        int userId = Integer.parseInt(requestBody.get("userId"));
+        User user = userService.getById(userId);
+        String originalPassword = requestBody.get("originalPassword");
+        String newPassword = requestBody.get("newPassword");
+
+        if (userService.checkPassword(user, originalPassword)) {
+            userService.changePassword(user, newPassword);
+            return ResultFactory.buildSuccessResult("修改成功");
+        } else {
+            return ResultFactory.buildFailResult("原密码错误！");
+        }
     }
 }

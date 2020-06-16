@@ -15,9 +15,13 @@
                 <div v-on:click="toWorksPage">作品</div>
                 <div v-on:click="toCollectsPage">收藏</div>
             </div>
+            <button class="change-password" v-if="isSelf" v-on:click="changePassword">修改密码</button>
+            <button class="edit-info" v-if="isSelf" v-on:click="changeUserInfo">编辑资料</button>
             <div class="email">邮箱：{{user.email}}</div>
             <div class="birthday">生日：{{birthdayText}}</div>
         </div>
+        <user-info-dialog v-if="showUserInfoDialog" :user="user"></user-info-dialog>
+        <password-dialog v-if="showPasswordDialog" :user-id="user.id"></password-dialog>
     </div>
 </template>
 
@@ -26,15 +30,22 @@
     import maleImg from "@/assets/male.png";
     import femaleImg from "@/assets/female.png"
     import http from "@/utils/http";
+    import UserInfoDialog from "@/components/UserInfoDialog";
+    import PasswordDialog from "@/components/PasswordDialog";
 
     export default {
         name: "User",
         components: {
-            'page-head': PageHead
+            'page-head': PageHead,
+            'user-info-dialog': UserInfoDialog,
+            'password-dialog': PasswordDialog
         },
         data() {
             return {
-                user: null
+                user: null,
+                isSelf: false,
+                showUserInfoDialog: false,
+                showPasswordDialog: false
             }
         },
         computed: {
@@ -59,10 +70,32 @@
             }
         },
         created() {
-            let userId = this.$route.query.userId;
+            let _this = this;
+            let userId = _this.$route.query.userId;
             this.getUser(userId);
+            // 判断是否为当前用户
+            http.fetchGet('currentuser', {}). then((res) => {
+               if (res.data.code === 200) {
+                   _this.isSelf = (res.data.data.id.toString() === userId);
+                   return true;
+               } else {
+                   return false;
+               }
+            });
         },
         methods: {
+            changeUserInfo() {
+                this.showPasswordDialog = false;
+                this.showUserInfoDialog = true;
+            },
+            changePassword() {
+                this.showPasswordDialog = true;
+                this.showUserInfoDialog = false;
+            },
+            hideDialog() {
+                this.showPasswordDialog = false;
+                this.showUserInfoDialog = false;
+            },
             getUser(userId) {
                 let _this = this;
                 http.fetchGet('getuser?userId=' + userId, {}).then((res) => {
@@ -214,6 +247,37 @@
                 border-radius: 20px;
                 background-color: #9795F0;
             }
+        }
+
+        button {
+            height: 30px;
+            width: 80px;
+
+            border: 0;
+            border-radius: 15px;
+
+            font-size: 16px;
+
+            background-color: #a8edea;
+            cursor: pointer;
+
+            &:hover {
+                box-shadow: 3px 3px 5px #888888;
+            }
+
+            &:active {
+                opacity: 0.5;
+            }
+        }
+        .change-password {
+            position: absolute;
+            left: 3%;
+            top: 80px;
+        }
+        .edit-info {
+            position: absolute;
+            left: 3%;
+            top: 25px;
         }
     }
 </style>

@@ -53,4 +53,17 @@ public class UserService {
     public User getAdminByEmail(String email) {
         return userRepository.getByEmailAndRole(email, 1);
     }
+
+    public void changeUserInfo(User user) {
+        userRepository.save(user);
+    }
+
+    public boolean checkPassword(User user, String password) {
+        return user.getPassword().equals(password);
+    }
+
+    public void changePassword(User user, String password) {
+        user.setPassword(password);
+        userRepository.save(user);
+    }
 }

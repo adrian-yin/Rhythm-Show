@@ -28,7 +28,7 @@
     import http from "@/utils/http";
 
     export default {
-        name: "User",
+        name: "Works",
         components: {
             'page-head': PageHead
         },
