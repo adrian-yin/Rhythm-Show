@@ -15,31 +15,31 @@
                 <div v-on:click="toWorksPage">作品</div>
                 <div class="select" v-on:click="toCollectsPage">收藏</div>
             </div>
-        </div>
-        <div class="content-area">
-            <div class="share-card" v-for="share in collects" :key="share.id">
-                <div class="title">{{share.name}}</div>
-                <div class="label">{{share.isOriginalName}}·{{share.typeName}}</div>
-                <div class="describe">{{share.describe}}</div>
-                <div class="like">
-                    <img src="../assets/like.png" alt=""
-                         v-on:click="clickLike($event, share)">
-                    <div class="num">{{share.likeNum}}</div>
+            <div class="content-area">
+                <div class="share-card" v-for="share in collects" :key="share.id">
+                    <div class="title">{{share.name}}</div>
+                    <div class="label">{{share.isOriginalName}}·{{share.typeName}}</div>
+                    <div class="describe">{{share.describe}}</div>
+                    <div class="like">
+                        <img src="../assets/like.png" alt=""
+                             v-on:click="clickLike($event, share)">
+                        <div class="num">{{share.likeNum}}</div>
+                    </div>
+                    <div class="collect">
+                        <img src="../assets/collect.png" alt=""
+                             v-on:click="clickCollect($event, share)">
+                        <div class="num">{{share.collectNum}}</div>
+                    </div>
+                    <div class="username" v-on:click="toSelectUserPage(share.user.id)">{{share.user.nickname}}</div>
+                    <img class="sound-button" src="../assets/sound.png" alt="播放"
+                         v-on:click="playMusic(share)">
+                    <img class="play-button" src="../assets/play.png" alt="演奏"
+                         v-if="share.showPlayImg"
+                         v-on:click="toPlayPage(share.musicScore)">
+                    <hr class="share-line">
                 </div>
-                <div class="collect">
-                    <img src="../assets/collect.png" alt=""
-                         v-on:click="clickCollect($event, share)">
-                    <div class="num">{{share.collectNum}}</div>
-                </div>
-                <div class="username" v-on:click="toSelectUserPage(share.user.id)">{{share.user.nickname}}</div>
-                <img class="sound-button" src="../assets/sound.png" alt="播放"
-                     v-on:click="playMusic(share)">
-                <img class="play-button" src="../assets/play.png" alt="演奏"
-                     v-if="share.showPlayImg"
-                     v-on:click="toPlayPage(share.musicScore)">
-                <hr class="share-line">
+                <div class="bottom-text">已经到达底部</div>
             </div>
-            <div class="bottom-text">已经到达底部</div>
         </div>
         <audio hidden></audio>
     </div>
@@ -81,8 +81,48 @@
         },
         created() {
             let _this = this;
+            // 获取用户
             let userId = _this.$route.query.userId;
-            this.getUser(userId);
+            http.fetchGet('getuser?userId=' + userId, {}).then((res) => {
+                if (res.data.code === 200) {
+                    _this.user = res.data.data;
+
+                    // 获取收藏
+                    http.fetchGet('getcollects?userId=' + userId, {}).then((res1) => {
+                        if (res1.data.code === 200) {
+                            console.log(res1);
+                            _this.collects = res1.data.data;
+                            _this.collects.forEach((share) => {
+                                // 添加类别、原创字符串，以及根据类别判断是否显示演奏图标
+                                if (share.type === 0) {
+                                    share.typeName = '录音';
+                                    share.showPlayImg = false;
+                                } else if (share.type === 1) {
+                                    share.typeName = '曲谱';
+                                    share.showPlayImg = true;
+                                } else {
+                                    share.typeName = '未知';
+                                    share.showPlayImg = true;
+                                }
+                                if (share.isOriginal === 0) {
+                                    share.isOriginalName = '非原创';
+                                } else if (share.isOriginal === 1) {
+                                    share.isOriginalName = '原创';
+                                } else {
+                                    share.isOriginalName = '未知';
+                                }
+                            })
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
+
+                    return true;
+                } else {
+                    return false;
+                }
+            });
             // 判断是否为当前用户
             http.fetchGet('currentuser', {}). then((res) => {
                 if (res.data.code === 200) {
@@ -92,6 +132,8 @@
                     return false;
                 }
             });
+            // 获取收藏
+
         },
         methods: {
             toPlayPage(musicScore) {
@@ -267,10 +309,6 @@
     }
 
     .info-area {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
 
         position: absolute;
         top: 450px;
@@ -278,8 +316,7 @@
         transform: translate(-50%, 0);
 
         padding: 20px;
-        height: 260px;
-        width: 80%;
+        width: 60%;
 
         font-size: 25px;
         color: #fff;
@@ -290,6 +327,10 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
+
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
 
             width: 60%;
 
@@ -310,6 +351,8 @@
 
     .content-area {
         padding: 10px 40px;
+        position: relative;
+        top: 100px;
 
         .share-card {
             position: relative;

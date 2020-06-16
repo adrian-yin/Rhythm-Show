@@ -1,6 +1,7 @@
 package com.adrianyin.rhythmshow.service;
 
 import com.adrianyin.rhythmshow.domain.Share;
+import com.adrianyin.rhythmshow.domain.User;
 import com.adrianyin.rhythmshow.repository.ShareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ShareService {
@@ -63,5 +65,9 @@ public class ShareService {
         share.setCollectNum(0);
         share.setPublishTime(new Date());
         shareRepository.save(share);
+    }
+
+    public List<Share> getByUser(User user) {
+        return shareRepository.getByUser(user);
     }
 }

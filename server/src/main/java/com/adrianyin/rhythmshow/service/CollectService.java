@@ -8,6 +8,9 @@ import com.adrianyin.rhythmshow.repository.CollectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CollectService {
 
@@ -32,5 +35,14 @@ public class CollectService {
 
         // share记录表中对应点赞数加1
         shareService.collectAddOne(share);
+    }
+
+    public List<Share> getShareByUser(User user) {
+        List<Collect> collects = collectRepository.getByUser(user);
+        List<Share> result = new ArrayList<>();
+        for (Collect collect : collects) {
+            result.add(collect.getShare());
+        }
+        return result;
     }
 }

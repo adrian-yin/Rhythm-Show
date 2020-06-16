@@ -167,10 +167,6 @@
     }
 
     .info-area {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
 
         position: absolute;
         top: 450px;
@@ -179,7 +175,7 @@
 
         padding: 20px;
         height: 260px;
-        width: 80%;
+        width: 60%;
 
         font-size: 25px;
         color: #fff;
@@ -190,6 +186,10 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
+
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
 
             width: 60%;
 
