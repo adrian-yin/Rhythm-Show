@@ -16,7 +16,7 @@
                 <div v-on:click="toCollectsPage">收藏</div>
             </div>
             <div class="email">邮箱：{{user.email}}</div>
-            <div class="birthday">生日：{{user.birthday}}</div>
+            <div class="birthday">生日：{{birthdayText}}</div>
         </div>
     </div>
 </template>
@@ -46,6 +46,15 @@
                     return femaleImg;
                 } else {
                     return null;
+                }
+            },
+            'birthdayText': function() {
+                let _this = this;
+                if (_this.user.birthday === null) {
+                    return '未知';
+                } else {
+                    let date = new Date(_this.user.birthday);
+                    return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
                 }
             }
         },

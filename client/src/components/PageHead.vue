@@ -116,6 +116,7 @@
                         userId: _this.user.id
                     }
                 });
+                _this.$router.go(0);
             },
             toSelfWorkPage() {
                 let _this = this;
@@ -125,6 +126,7 @@
                         userId: _this.user.id
                     }
                 });
+                _this.$router.go(0);
             },
             toSelfCollectPage() {
                 let _this = this;
@@ -134,6 +136,7 @@
                         userId: _this.user.id
                     }
                 });
+                _this.$router.go(0);
             }
         }
     }
