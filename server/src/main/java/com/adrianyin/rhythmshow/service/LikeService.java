@@ -32,4 +32,8 @@ public class LikeService {
         // share记录表中对应点赞数加1
         shareService.likeAddOne(share);
     }
+
+    public void deleteByShare(Share share) {
+        likeRepository.deleteByShare(share);
+    }
 }

@@ -45,4 +45,12 @@ public class CollectService {
         }
         return result;
     }
+
+    public void deleteByShareAndUser(Share share, User user) {
+        collectRepository.deleteByShareAndUser(share, user);
+    }
+
+    public void deleteByShare(Share share) {
+        collectRepository.deleteByShare(share);
+    }
 }

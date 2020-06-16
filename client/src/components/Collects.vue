@@ -30,6 +30,10 @@
                              v-on:click="clickCollect($event, share)">
                         <div class="num">{{share.collectNum}}</div>
                     </div>
+                    <div class="delete" v-if="isSelf">
+                        <img src="../assets/delete.png" alt=""
+                             v-on:click="deleteCollect(share.id)">
+                    </div>
                     <div class="username" v-on:click="toSelectUserPage(share.user.id)">{{share.user.nickname}}</div>
                     <img class="sound-button" src="../assets/sound.png" alt="播放"
                          v-on:click="playMusic(share)">
@@ -132,10 +136,23 @@
                     return false;
                 }
             });
-            // 获取收藏
-
         },
         methods: {
+            deleteCollect(shareId) {
+                let _this = this
+                if (confirm("确认要删除吗？") === true) {
+                    http.fetchGet('deletecollect?shareId=' + shareId, {}).then((res) => {
+                        if (res.data.code === 200) {
+                            alert('成功');
+                            _this.$router.go(0);
+                            return true;
+                        } else {
+                            alert('失败');
+                            return false;
+                        }
+                    });
+                }
+            },
             toPlayPage(musicScore) {
                 this.$router.push({
                     path: '/play',
@@ -318,7 +335,7 @@
         padding: 20px;
         width: 60%;
 
-        font-size: 25px;
+        font-size: 20px;
         color: #fff;
 
         background-color: #00000080;
@@ -334,6 +351,7 @@
 
             width: 60%;
 
+            font-size: 25px;
             font-weight: bold;
             color: #FCDC00;
 
@@ -398,7 +416,7 @@
                 text-overflow: ellipsis;
             }
 
-            .like, .collect {
+            .like, .collect, .delete {
                 color: #fed6e3;
                 text-align: left;
 
@@ -438,6 +456,11 @@
                 position: absolute;
                 bottom: 15px;
                 left: 230px;
+            }
+            .delete {
+                position: absolute;
+                bottom: 15px;
+                left: 400px;
             }
 
             .username {

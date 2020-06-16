@@ -99,6 +99,7 @@
             let _this = this;
             // 销毁滚动加载事件
             document.removeEventListener('scroll', _this.scrollListener);
+            _this.shares = [];
         },
         methods: {
             scrollListener() {

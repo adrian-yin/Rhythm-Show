@@ -1,7 +1,10 @@
 package com.adrianyin.rhythmshow.service;
 
+import com.adrianyin.rhythmshow.domain.Like;
 import com.adrianyin.rhythmshow.domain.Share;
 import com.adrianyin.rhythmshow.domain.User;
+import com.adrianyin.rhythmshow.repository.CollectRepository;
+import com.adrianyin.rhythmshow.repository.LikeRepository;
 import com.adrianyin.rhythmshow.repository.ShareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,10 +23,14 @@ import java.util.List;
 public class ShareService {
 
     final ShareRepository shareRepository;
+    final CollectRepository collectRepository;
+    final LikeRepository likeRepository;
 
     @Autowired
-    public ShareService(ShareRepository shareRepository) {
+    public ShareService(ShareRepository shareRepository, CollectRepository collectRepository, LikeRepository likeRepository) {
         this.shareRepository = shareRepository;
+        this.collectRepository = collectRepository;
+        this.likeRepository = likeRepository;
     }
 
     public Page<Share> getByTypeAndIsCollect(Collection<Integer> types,
@@ -69,5 +76,12 @@ public class ShareService {
 
     public List<Share> getByUser(User user) {
         return shareRepository.getByUser(user);
+    }
+
+    public void deleteById(int id) {
+        Share share = getById(id);
+        likeRepository.deleteByShare(share);
+        collectRepository.deleteByShare(share);
+        shareRepository.deleteById(id);
     }
 }

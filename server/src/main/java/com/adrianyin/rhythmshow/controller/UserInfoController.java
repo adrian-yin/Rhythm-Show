@@ -90,4 +90,20 @@ public class UserInfoController {
         List<Share> works = shareService.getByUser(user);
         return ResultFactory.buildSuccessResult(works);
     }
+
+    @GetMapping("api/deletecollect")
+    @ResponseBody
+    public Result deleteCollect(@RequestParam(name = "shareId") int shareId,
+                                @CurrentUser User user) {
+        Share share = shareService.getById(shareId);
+        collectService.deleteByShareAndUser(share, user);
+        return ResultFactory.buildSuccessResult("删除成功");
+    }
+
+    @GetMapping("api/deletework")
+    @ResponseBody
+    public Result deleteWork(@RequestParam(name = "shareId") int shareId) {
+        shareService.deleteById(shareId);
+        return ResultFactory.buildSuccessResult("删除成功");
+    }
 }
